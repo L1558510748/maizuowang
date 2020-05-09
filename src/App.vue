@@ -1,32 +1,75 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <router-view />
+    <div id="footer" >
+      <figure>
+        <router-link to="/film">
+          <van-icon name="video-o" />
+          <figcaption>电影</figcaption>
+        </router-link>
+      </figure>
+
+      <figure>
+        <router-link to="/cinema">
+          <van-icon name="hotel-o" />
+          <figcaption>影院</figcaption>
+        </router-link>
+      </figure>
+      <figure>
+        <router-link to="/info">
+          <van-icon name="newspaper-o" />
+          <figcaption>资讯</figcaption>
+        </router-link>
+      </figure>
+
+      <figure>
+        <router-link to="/user">
+          <van-icon name="contact" />
+          <figcaption>我的</figcaption>
+        </router-link>
+      </figure>
     </div>
-    <router-view/>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style lang="scss" scoped>
+@import "~@/assets/css/reset.css";
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  li {
+    flex: 1;
+    text-align: center;
+  }
 }
+#footer {
+  position: fixed;
+  background-color: #fff;
+  bottom: 0;
+  height: 0.9rem;
+  border-top: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  // justify-content: space-around;
+  width: 100%;
+  .active {
+    color: #0084ff;
+  }
+  figure {
+    
+    flex: 1;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    figcaption{
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+      font-size: 12px;
     }
   }
+}
+.router-link-active {
+  color: red;
 }
 </style>
