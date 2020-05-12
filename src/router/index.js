@@ -6,6 +6,7 @@ import Info from '../views/Info.vue'
 import User from '../views/User.vue'
 import City from '../views/City.vue'
 import Detail from '../views/Detail.vue'
+import Login from '../views/Login.vue'
 Vue.use(VueRouter)
   const routes = [
   {
@@ -44,6 +45,10 @@ Vue.use(VueRouter)
   {
     path:"/detail/:id",
     component:Detail
+  },
+  {
+    path:"/login",
+    component:Login
   }
 ]
 const router = new VueRouter({

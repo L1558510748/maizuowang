@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" >
     <router-view />
-    <div id="footer" >
+    <div id="footer" v-show="visible">
       <figure>
         <router-link to="/film">
           <van-icon name="video-o" />
@@ -31,7 +31,27 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  data(){
+    return {
+      visible:true
+    }
+  },
+ watch:{
+   $route:{
+     handler(n){
+       this.visible=!n.meta.flag
+       if(this.$route.path.indexOf("detail")!=-1)this.visible=false;
+       if(this.$route.path.indexOf("login")!=-1)this.visible=false;
+     }
+     
 
+     
+   }
+ }
+}
+</script>
 <style lang="scss" scoped>
 @import "~@/assets/css/reset.css";
 .tabbar {

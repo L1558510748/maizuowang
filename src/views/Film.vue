@@ -27,7 +27,8 @@
               </p>
               <p>
                 <span>主演:</span>
-                <span>{{actor(item.actors)}}</span>
+                <span v-if="item.actors">{{item.actors&&actor(item.actors)}}</span>
+                <span v-if="!item.actors">暂无</span>
               </p>
               <p v-if="$route.path==='/film/nowplaying'">
                 <span>{{item.nation}}</span>|
@@ -54,8 +55,9 @@ export default {
   data() {
     return {
       films: [],
-      actors: "",
-      flag:true
+      
+      flag:true,
+      actorname:""
     };
   },
   computed: {
@@ -71,16 +73,14 @@ export default {
     show(){
         return this.$route.path==="/film/nowplaying"?true:false
     }
-
   },
   watch: {
     $route: {
       handler(n) {
         var type = n.params.type === "nowplaying" ? 1 : 2;
-        getFilm(type).then(res => {
-          console.log(res);
+        var cityid=localStorage.getItem("cityId")
+        getFilm(type,cityid).then(res => {
           this.films = res.data.films;
-          this.actors = this.films.actors;
         });
       },
       immediate: true
@@ -88,19 +88,22 @@ export default {
   },
   methods: {
     go(filmid) {
-      this.$router.push("/detail" + filmid);
+      this.$router.push("/detail/" + filmid);
     },
-    actor(item) {
+    actor(val) {
       var actors = "";
-
-      console.log(item);
-      item.forEach(item => {
-        actors += item.name + " ";
+      console.log(val);
+      val.forEach((item) => {
+        actors += (item.name+" ");
+        console.log(item.name)
       });
+      console.log(actors)
+      if(val==null){
+        actors="暂无"
+      }
       return actors;
     },
     date(time){
-       
         return new Date(time*1000).toLocaleString().split(" ")[0]+"上映";
     }
   }
@@ -142,6 +145,7 @@ border-bottom: 1px solid #ccc;
     width: 100%;
     background-color: #fff;
     overflow-y: auto;
+    margin-bottom: .9rem;
     ul {
       width: 100%;
 
@@ -150,7 +154,7 @@ border-bottom: 1px solid #ccc;
        width: 100%;
         box-sizing: border-box;
         height: 2.64rem;
-        
+        border-bottom: 1px solid #eee;
         display: flex;
         background-color: #fff;
         img {
@@ -187,6 +191,7 @@ border-bottom: 1px solid #ccc;
               .filmname {
                 font-size: 16px;
                 color: #333;
+                margin-right: 5px;
               }
               .filmtype {
                 background-color: #ccc;
